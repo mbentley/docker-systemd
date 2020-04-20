@@ -1,0 +1,23 @@
+FROM ubuntu:18.04
+MAINTAINER Matt Bentley <mbentley@mbentley.net>
+
+ENV container=docker LC_ALL=C
+
+RUN apt-get update &&\
+  DEBIAN_FRONTEND=noninteractive apt-get install -y systemd systemd-sysv &&\
+  systemctl set-default multi-user.target &&\
+  rm -rf /var/lib/apt/lists/* &&\
+  rm -f /lib/systemd/system/multi-user.target.wants/* \
+    /etc/systemd/system/*.wants/* \
+    /lib/systemd/system/local-fs.target.wants/* \
+    /lib/systemd/system/sockets.target.wants/*udev* \
+    /lib/systemd/system/sockets.target.wants/*initctl* \
+    /lib/systemd/system/basic.target.wants/* \
+    /lib/systemd/system/anaconda.target.wants/* \
+    /lib/systemd/system/plymouth* \
+    /lib/systemd/system/systemd-update-utmp* &&\
+  cd /lib/systemd/system/sysinit.target.wants/ &&\
+    ls | grep -v systemd-tmpfiles-setup | xargs rm -f $1
+
+STOPSIGNAL RTMIN+3
+CMD ["/lib/systemd/systemd"]
