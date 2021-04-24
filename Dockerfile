@@ -16,7 +16,7 @@ RUN apt-get update &&\
     /lib/systemd/system/anaconda.target.wants/* \
     /lib/systemd/system/plymouth* \
     /lib/systemd/system/systemd-update-utmp* &&\
-  (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done);
+  (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ "${i}" = "systemd-tmpfiles-setup.service" ] || rm -f "${i}"; done);
 
 STOPSIGNAL SIGRTMIN+3
 CMD ["/lib/systemd/systemd"]
