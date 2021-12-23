@@ -1,4 +1,5 @@
-FROM ubuntu:18.04
+# rebased/repackaged base image that only updates existing packages
+FROM mbentley/ubuntu:18.04
 MAINTAINER Matt Bentley <mbentley@mbentley.net>
 
 ENV container=docker LC_ALL=C
