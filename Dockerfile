@@ -1,11 +1,11 @@
 # rebased/repackaged base image that only updates existing packages
-FROM mbentley/ubuntu:18.04
+FROM mbentley/ubuntu:20.04
 LABEL maintainer="Matt Bentley <mbentley@mbentley.net>"
 
 ENV container=docker LC_ALL=C
 
 RUN apt-get update &&\
-  DEBIAN_FRONTEND=noninteractive apt-get install -y systemd systemd-sysv &&\
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends systemd systemd-sysv &&\
   systemctl set-default multi-user.target &&\
   rm -rf /var/lib/apt/lists/* &&\
   rm -f /lib/systemd/system/multi-user.target.wants/* \
